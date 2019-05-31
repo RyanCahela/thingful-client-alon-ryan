@@ -41,7 +41,7 @@ class App extends Component {
               component={RegistrationPage}
             />
             <Route
-              path={'/thing/:thingId'}
+              path={'/things/:thingId'}
               component={ThingPage}
             />
             <Route
