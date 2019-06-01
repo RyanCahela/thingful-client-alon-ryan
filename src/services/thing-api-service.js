@@ -16,7 +16,7 @@ const ThingApiService = {
   getThing(thingId) {
     return fetch(`${config.API_ENDPOINT}/things/${thingId}`, {
       headers: {
-        'Authorization': `basic ${TokenService.getAuthToken()}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
     })
       .then(res =>
@@ -28,7 +28,7 @@ const ThingApiService = {
   getThingReviews(thingId) {
     return fetch(`${config.API_ENDPOINT}/things/${thingId}/reviews`, {
       headers: {
-        'Authorization': `basic ${TokenService.getAuthToken()}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
     })
       .then(res =>
@@ -42,7 +42,7 @@ const ThingApiService = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `basic ${TokenService.getAuthToken()}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify({
         thing_id: thingId,
@@ -55,6 +55,21 @@ const ThingApiService = {
           ? res.json().then(e => Promise.reject(e))
           : res.json()
       )
+  },
+  postLogin(credentials) {
+    return fetch(`${config.API_ENDPOINT}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then(res => {
+      if(!res.ok) {
+        res.json().then(e => Promise.reject(e))
+      }
+      return res.json()
+    })      
   }
 }
 
